@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import Controller from './controller';
 
 class IndexController extends Controller {

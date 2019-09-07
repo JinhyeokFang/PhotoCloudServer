@@ -3,14 +3,14 @@ import { Schema, model, Model } from 'mongoose';
 import { encrypt } from '../utils/crypto';
 import UserModel from '../types/user.type';
 
-const userSchema = new Schema({
-    username: String,
-    password: String,
-    photos: Array
-});
-
 class User {
-    private userModelInstance: Model<UserModel> = model("user", userSchema);
+    private userSchema: Schema = new Schema({
+        username: String,
+        password: String,
+        photos: Array
+    });
+    private userModelInstance: Model<UserModel> = model("user", this.userSchema);
+
     public login(username: string, password: string): Promise<any> {
         return new Promise((resolve: Function, reject: Function): void => {
             this.userModelInstance.findOne({username: encrypt(username), password: encrypt(password)}, (err: object, res: UserModel): void => {
