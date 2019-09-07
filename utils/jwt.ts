@@ -5,17 +5,23 @@ var encodeToken = function (data: object): string {
 }
 
 var decodeToken = function (token: string): any {
-    return decode(token, "SECRET_KEY");
+    try {
+        let decoded = decode(token, "SECRET_KEY");
+        return decoded;
+    } catch {
+        return null;
+    }
 }
 
 var isVaildToken = function (token: any): boolean {
     let decodedToken = decodeToken(token);
+    if (decodedToken == null)
+        return false;
     if (decodedToken.time == undefined)
         return false;
-    else if (new Date().getTime() - decodedToken.time > 1000 * 60 * 60 * 24)
+    if (new Date().getTime() - decodedToken.time > 1000 * 60 * 60 * 24)
         return false;
-    else
-        return true;
+    return true;
 }
 
 export { encodeToken, decodeToken, isVaildToken };

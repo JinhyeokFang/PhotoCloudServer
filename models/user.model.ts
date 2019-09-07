@@ -79,6 +79,32 @@ class User {
             });
         });
     }
+
+    public removeImage(username: string, imageDate: string): Promise<any> {
+        return new Promise((resolve: Function, reject: Function): void => {
+            this.userModelInstance.findOne({username: encrypt(username)}, (err: object, res: UserModel): void => {
+                if (err) {
+                    resolve({ err });
+                } else if (res == null) {
+                    resolve({ err: "the user not found" });
+                } else {
+                    let imageIndex = res.photos.findIndex(el => el.date == imageDate);
+                    if (imageIndex == -1) {
+                        resolve({ err: "the image not found" });
+                    } else {
+                        res.photos.splice(imageIndex, 1);
+                        this.userModelInstance.updateOne({username: encrypt(username)}, {photos: res.photos}, (err: object) => {
+                            if (err) {
+                                resolve({ err });
+                            } else {
+                                resolve({});
+                            }
+                        });
+                    }
+                }
+            });
+        })
+    }
 }
 
 export default new User();
