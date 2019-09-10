@@ -35,4 +35,4 @@ app.use('/user', UserRoute);
 // app.set('views', './views');
 // app.set('view engine', 'ejs');
 
-app.listen(config.port, (): void => console.log(`Listening at http://localhost:${config.port}/`));
+app.listen(process.env.PORT || config.port, (): void => console.log(`Listening at http://localhost:${config.port}/`));
