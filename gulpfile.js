@@ -11,7 +11,7 @@ gulp.task("build", function () {
         .js
         .pipe(babel({
             presets: ["@babel/preset-env"],
-            plugins: ["@babel/plugin-transform-async-to-generator"]
+            plugins: ["@babel/plugin-transform-async-to-generator", "@babel/polyfill"]
           }))
         .pipe(uglify())
         .pipe(gulp.dest("dist"));
