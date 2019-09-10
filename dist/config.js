@@ -1,13 +1,1 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = {
-    port: 8000,
-    env: "dev",
-    db: {
-        name: "photoCloudDB"
-    },
-    fileDir: {
-        default: 'files/'
-    },
-    staticDir: './files'
-};
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0}),exports.default={port:8e3,env:"dev",db:{name:"photoCloudDB"},fileDir:{default:"files/"},staticDir:"./files"};

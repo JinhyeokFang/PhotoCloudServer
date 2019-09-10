@@ -10,7 +10,8 @@ gulp.task("build", function () {
         .pipe(tsProject())
         .js
         .pipe(babel({
-            presets: ["@babel/preset-env"]
+            presets: ["@babel/preset-env"],
+            plugins: ["@babel/plugin-transform-async-to-generator"]
           }))
         .pipe(uglify())
         .pipe(gulp.dest("dist"));
