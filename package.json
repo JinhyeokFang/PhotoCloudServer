@@ -33,7 +33,7 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/gulp",
-    "dev": "./node_modules/.bin/gulp devBuild && node ./dist/server.js",
+    "dev": "node ./dist/server.js",
     "start": "npm run dev"
   },
   "repository": {
