@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { encodeToken, isVaildToken } from '../utils/jwt';
+import { encodeToken, decodeToken, isVaildToken } from '../utils/jwt';
 
 import Controller from './controller';
 import user from '../models/user.model'
@@ -9,7 +9,10 @@ class AuthController extends Controller {
         let { token } = req.body;
 
         if (isVaildToken(token))
-            super.ResponseSuccess(res, {});
+            super.ResponseSuccess(res, {token: encodeToken({
+                username: decodeToken(token).username,
+                time: new Date().getTime()
+            })});
         else
             super.ResponseUnauthorized(res, {});
     }
@@ -25,7 +28,7 @@ class AuthController extends Controller {
             super.ResponseInternalServerError(res, {err: result.err});
         } else {
             super.ResponseSuccess(res, {token: encodeToken({
-                username: username,
+                username,
                 time: new Date().getTime()
             })});
         }
