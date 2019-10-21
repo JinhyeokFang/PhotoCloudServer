@@ -1,9 +1,5 @@
 import { Document } from 'mongoose';
-
-interface Photo {
-    url: string;
-    date: string;
-};
+import Photo from './photo.type';
 
 interface UserModel extends Document {
     username: string;

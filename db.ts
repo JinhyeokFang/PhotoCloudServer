@@ -1,11 +1,9 @@
 import mongoose from 'mongoose';
 
-import config from './config';
-
 class DB {
     public initialize(): void {
-        mongoose.connect(`mongodb+srv://jinhyeokfang:dbpassword@cluster0-osjxh.azure.mongodb.net/test?retryWrites=true&w=majority`, {
-            useNewUrlParser: true
+        mongoose.connect(`mongodb://localhost:27017/photocloud`, {
+            useNewUrlParser: true   
         });
     }
 }

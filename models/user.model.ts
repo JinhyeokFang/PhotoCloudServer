@@ -44,7 +44,7 @@ class User {
         });
     }
 
-    public uploadPhoto(username: string, filename: string): Promise<any> {
+    public uploadPhoto(username: string, filename: string, date: string): Promise<any> {
         return new Promise((resolve: Function, reject: Function): void => {
             this.userModelInstance.findOne({username: encrypt(username)}, (err: object, res: UserModel): void => {
                 if (err) {
@@ -53,14 +53,18 @@ class User {
                     resolve({ err: "the user not found" });
                 } else {
                     let photos = res.photos;
-                    photos.push({url: filename, date: new Date().getTime().toString()});
-                    this.userModelInstance.updateOne({username: encrypt(username)}, {photos}, (err: object) => {
-                        if (err) {
-                            resolve({ err });
-                        } else {
-                            resolve({});
-                        }
-                    });
+                    if (photos.find(photo => photo.date == date) == undefined) {
+                        photos.push({url: filename, date});
+                        this.userModelInstance.updateOne({username: encrypt(username)}, {photos}, (err: object) => {
+                            if (err) {
+                                resolve({ err });
+                            } else {
+                                resolve({});
+                            }
+                        });
+                    } else {
+                        resolve({ err: "the image is already exist" });
+                    }
                 }
             });
         });

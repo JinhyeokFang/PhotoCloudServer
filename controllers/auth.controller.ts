@@ -1,10 +1,19 @@
 import { Request, Response } from 'express';
-import { encodeToken } from '../utils/jwt';
+import { encodeToken, isVaildToken } from '../utils/jwt';
 
 import Controller from './controller';
 import user from '../models/user.model'
 
 class AuthController extends Controller {
+    public async checkToken(req: Request, res: Response): Promise<void> {
+        let { token } = req.body;
+
+        if (isVaildToken(token))
+            super.ResponseSuccess(res, {});
+        else
+            super.ResponseUnauthorized(res, {});
+    }
+
     public async login(req: Request, res: Response): Promise<void> {
         let { username, password } = req.body;
 

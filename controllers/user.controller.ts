@@ -6,7 +6,7 @@ import { isVaildToken, decodeToken } from '../utils/jwt';
 
 class UserController extends Controller {
     public async addImage(req: Request, res: Response): Promise<void> {
-        let { token } = req.body;
+        let { token, date } = req.body;
 
         if (!req.file) {
             super.ResponseBadRequest(res, { err: "file not found" });
@@ -20,10 +20,12 @@ class UserController extends Controller {
             return;
         }
 
-        let result = await user.uploadPhoto(decodeToken(token).username, filename);
+        let result = await user.uploadPhoto(decodeToken(token).username, filename, date);
 
         if (result.err == "the user not found") {
             super.ResponseNotFound(res, { err: result.err });
+        } else if (result.err == "the image is already exist") {
+            super.ResponseSuccess(res, { message: "the image is already exist"});
         } else if (result.err) {
             super.ResponseInternalServerError(res, { err: result.err });
         } else {
