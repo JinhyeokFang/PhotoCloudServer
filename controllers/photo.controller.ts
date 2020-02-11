@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 
 import Controller from './controller';
-import user from '../models/user.model'
+import userService from '../services/user.service'
 import { isVaildToken, decodeToken } from '../utils/jwt';
 
-class UserController extends Controller {
+class PhotoController extends Controller {
     public async addImage(req: Request, res: Response): Promise<void> {
         let { token, date } = req.body;
 
@@ -20,7 +20,7 @@ class UserController extends Controller {
             return;
         }
 
-        let result = await user.uploadPhoto(decodeToken(token).username, filename, date);
+        let result = await userService.uploadPhoto(decodeToken(token).username, filename, date);
 
         if (result.err == "the user not found") {
             super.ResponseNotFound(res, { err: result.err });
@@ -41,7 +41,7 @@ class UserController extends Controller {
             return;
         }
 
-        let result = await user.showPhotos(decodeToken(token).username);
+        let result = await userService.showPhotos(decodeToken(token).username);
 
         if (result.err == "the user not found") {
             super.ResponseNotFound(res, { err: result.err });
@@ -60,7 +60,7 @@ class UserController extends Controller {
             return;
         }
 
-        let result = await user.removeImage(decodeToken(token).username, imageDate);
+        let result = await userService.removeImage(decodeToken(token).username, imageDate);
 
         if (result.err == "the user not found") {
             super.ResponseBadRequest(res, { err: result.err });
@@ -74,4 +74,4 @@ class UserController extends Controller {
     }
 }
 
-export default new UserController();
+export default new PhotoController();

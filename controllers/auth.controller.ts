@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { encodeToken, decodeToken, isVaildToken } from '../utils/jwt';
 
 import Controller from './controller';
-import user from '../models/user.model'
+import userService from '../services/user.service'
 
 class AuthController extends Controller {
     public async checkToken(req: Request, res: Response): Promise<void> {
@@ -20,7 +20,7 @@ class AuthController extends Controller {
     public async login(req: Request, res: Response): Promise<void> {
         let { username, password } = req.body;
 
-        let result = await user.login(username, password);
+        let result = await userService.login(username, password);
 
         if (result.err == "the user not found") {
             super.ResponseNotFound(res, {});
@@ -37,7 +37,7 @@ class AuthController extends Controller {
     public async register(req: Request, res: Response): Promise<void> {
         let { username, password } = req.body;  
 
-        let result = await user.register(username, password);
+        let result = await userService.register(username, password);
 
         if (result.err == "the user already exist.") {
             super.ResponseForbidden(res, {err: result.err});

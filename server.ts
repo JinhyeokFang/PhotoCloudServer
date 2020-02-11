@@ -11,7 +11,7 @@ import db from './db';
 
 import IndexRoute from './inputs/index.route';
 import AuthRoute from './inputs/auth.route';
-import UserRoute from './inputs/user.route';
+import PhotoRoute from './inputs/photo.route';
 
 const app: express.Application = express();
 
@@ -30,12 +30,12 @@ app.use(express.static(config.staticDir));
 
 app.use('/', IndexRoute);
 app.use('/auth', AuthRoute);
-app.use('/user', UserRoute);
+app.use('/user', PhotoRoute);
 
 // app.set('views', './views');
 // app.set('view engine', 'ejs');
 
-app.listen(8080, (): void => {
+app.listen(8000, (): void => {
     if (process.send) {
         process.send('ready')
     }

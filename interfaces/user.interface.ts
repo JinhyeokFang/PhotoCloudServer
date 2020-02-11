@@ -1,10 +1,10 @@
 import { Document } from 'mongoose';
-import Photo from './photo.type';
+import Photo from './photo.interface';
 
-interface UserModel extends Document {
+interface UserDoc extends Document {
     username: string;
     password: string;
     photos: Photo[];
 };
 
-export default UserModel;
+export default UserDoc;

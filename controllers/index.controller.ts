@@ -4,7 +4,7 @@ import Controller from './controller';
 
 class IndexController extends Controller {
     public index(req: Request, res: Response): void {
-        // res.render('index');
+        res.send("Hello")
     }
 }
 
